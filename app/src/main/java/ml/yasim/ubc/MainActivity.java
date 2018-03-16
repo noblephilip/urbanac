@@ -1,22 +1,32 @@
 package ml.yasim.ubc;
 
-import android.app.*;
-import android.os.*;
-import android.view.*;
-import android.view.View.*;
-import android.widget.*;
-import android.content.*;
-import android.content.ClipboardManager;
-import android.graphics.*;
-import android.media.*;
-import android.net.*;
-import android.text.*;
-import android.util.*;
-import android.webkit.*;
-import android.animation.*;
-import android.view.animation.*;
-import java.util.*;
-import java.text.*;
+import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.SparseBooleanArray;
+import android.util.TypedValue;
+import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends Activity {
@@ -236,10 +246,9 @@ public class MainActivity extends Activity {
 	}
 
 	private void _internet () {
-		try {
-		command = "ping -c 1 8.8.8.8";
-		connected = (Runtime.getRuntime().exec (command).waitFor() == 0); } catch (Exception e){ showMessage(e.toString());}
-
+		ConnectivityManager connectivityManager=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
+		connected = networkInfo != null && networkInfo.isConnected();
 	}
 	private void _animate () {
 		main.setVisibility(View.GONE);
